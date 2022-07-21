@@ -1,0 +1,376 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "Smart Home",
+      "description": "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://smarthome112.herokuapp.com/api"
+      }
+    ],
+    "tags": [
+      {
+        "name": "login",
+        "description": "Đăng nhập"
+      },
+      {
+        "name": "sign-up",
+        "description": "Đăng ký"
+      },
+      {
+        "name": "logout",
+        "description": "Đăng xuất (Hủy access token - bearer token)"
+      }
+    ],
+    "paths": {
+      "/login": {
+        "post": {
+          "tags": [
+            "login"
+          ],
+          "summary": "Đăng nhập",
+          "operationId": "login",
+          "requestBody": {
+            "description": "Thông tin đăng nhập",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "account": {
+                      "type": "string",
+                      "description": "Tên đăng nhập"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "Mật khẩu"
+                    }
+                  }
+                },
+                "example": {
+                  "account": "Demo2",
+                  "password": "123345"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Đăng nhập thành công"
+            },
+            "403": {
+              "description": "Đăng nhập không thành công"
+            }
+          }
+        }
+      },
+      "/logout": {
+        "delete": {
+          "tags": [
+            "logout"
+          ],
+          "summary": "Đăng xuất",
+          "operationId": "log-out",
+          "responses": {
+            "200": {
+              "description": "Đăng xuất thành công"
+            },
+            "403": {
+              "description": "Đăng nhập không thành công"
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ]
+        }
+      },
+      "/sign-up": {
+        "post": {
+          "tags": [
+            "sign-up"
+          ],
+          "summary": "Đăng ký",
+          "operationId": "sign-up",
+          "requestBody": {
+            "description": "Thông tin đăng ký",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "account": {
+                      "type": "string",
+                      "description": "Tên đăng nhập"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "Mật khẩu"
+                    }
+                  }
+                },
+                "example": {
+                  "account": "Demo2",
+                  "password": "123345"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Đăng ký thành công"
+            },
+            "422": {
+              "description": "Tài khoản đã tồn tại"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Category": {
+          "required": [
+            "name"
+          ],
+          "type": "object",
+          "description": "Thể loại thiết bị",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Tên loại thiết bị"
+            },
+            "commands": {
+              "type": "array",
+              "description": "Tập câu lệnh của thiết bị",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "ECabinet": {
+          "required": [
+            "name",
+            "ip",
+            "status"
+          ],
+          "type": "object",
+          "description": "Tủ điện",
+          "properties": {
+            "_id": {
+              "type": "integer",
+              "description": "Mã định danh tủ điện",
+              "format": "int64"
+            },
+            "name": {
+              "type": "string",
+              "description": "Tên tủ điện"
+            },
+            "ip": {
+              "type": "string",
+              "description": "Địa chỉ ip"
+            },
+            "status": {
+              "type": "object",
+              "description": "Trạng thái của tủ điện",
+              "properties": {
+                "on": {
+                  "type": "boolean",
+                  "description": "Tủ điện có được đang bật hay tắt"
+                },
+                "cur_wattage": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Công suất hiện tại của tủ điện"
+                },
+                "cur_amperage": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Cường độ dòng điện hiện tại của tủ điện"
+                },
+                "cur_voltage": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Điện thế hiện tại của tủ điện"
+                }
+              }
+            },
+            "commands": {
+              "type": "array",
+              "description": "Tập câu lệnh của tủ điện",
+              "items": {
+                "type": "string"
+              }
+            },
+            "configuration": {
+              "type": "object",
+              "description": "Cấu hình của tủ điện",
+              "properties": {
+                "wattage": {
+                  "type": "string",
+                  "description": "Công suất của tủ điện"
+                },
+                "voltage": {
+                  "type": "string",
+                  "description": "Cường độ dòng điện của tủ điện"
+                },
+                "frequency": {
+                  "type": "string",
+                  "description": "Điện thế của tủ điện"
+                }
+              }
+            },
+            "smart_device_gr_id": {
+              "type": "array",
+              "description": "Danh sách thiết bị của tủ điện",
+              "items": {
+                "$ref": "#/components/schemas/SmartDevice"
+              }
+            },
+            "user": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        },
+        "SmartDevice": {
+          "required": [
+            "name",
+            "ip",
+            "status",
+            "configuration",
+            "model"
+          ],
+          "type": "object",
+          "description": "Thiết bị",
+          "properties": {
+            "_id": {
+              "type": "integer",
+              "description": "Mã định danh thiết bị",
+              "format": "int64"
+            },
+            "name": {
+              "type": "string",
+              "description": "Tên thiết bị"
+            },
+            "ip": {
+              "type": "string",
+              "description": "Địa chỉ ip"
+            },
+            "status": {
+              "type": "object",
+              "description": "Trạng thái của thiết bị",
+              "properties": {
+                "on": {
+                  "type": "boolean",
+                  "description": "Thiết bị có được đang bật hay tắt"
+                },
+                "cur_wattage": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Công suất hiện tại của thiết bị"
+                },
+                "cur_amperage": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Cường độ dòng điện hiện tại của thiết bị"
+                },
+                "cur_voltage": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Điện thế hiện tại của thiết bị"
+                }
+              }
+            },
+            "model": {
+              "type": "string",
+              "description": "Mẫu thiết bị"
+            },
+            "configuration": {
+              "type": "object",
+              "description": "Cấu hình của thiết bị",
+              "properties": {
+                "wattage": {
+                  "type": "string",
+                  "description": "Công suất của thiết bị"
+                },
+                "voltage": {
+                  "type": "string",
+                  "description": "Cường độ dòng điện của thiết bị"
+                },
+                "frequency": {
+                  "type": "string",
+                  "description": "Điện thế của thiết bị"
+                }
+              }
+            },
+            "type": {
+              "$ref": "#/components/schemas/Category"
+            }
+          }
+        },
+        "User": {
+          "required": [
+            "account",
+            "password"
+          ],
+          "type": "object",
+          "description": "Thông tin người dùng",
+          "properties": {
+            "_id": {
+              "type": "integer",
+              "description": "Mã định danh người dùng",
+              "format": "int64"
+            },
+            "account": {
+              "type": "string",
+              "description": "Tên tài khoản",
+              "uniqueItems": true
+            },
+            "password": {
+              "type": "string",
+              "description": "Mật khẩu"
+            },
+            "refreshToken": {
+              "type": "string"
+            },
+            "accessToken": {
+              "type": "string"
+            }
+          },
+          "xml": {
+            "name": "User"
+          }
+        }
+      },
+      "securitySchemes": {
+        "petstore_auth": {
+          "type": "oauth2",
+          "flows": {
+            "implicit": {
+              "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+              "scopes": {
+                "write:pets": "modify pets in your account",
+                "read:pets": "read your pets"
+              }
+            }
+          }
+        },
+        "api_key": {
+          "type": "apiKey",
+          "name": "api_key",
+          "in": "header"
+        },
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    }
+  }
