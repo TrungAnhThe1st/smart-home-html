@@ -7,22 +7,38 @@
   },
   "servers": [
     {
-      "url": "https://smarthome112.herokuapp.com"
+      "url": "https://smarthome112.herokuapp.com/v1"
     }
   ],
   "tags": [
     {
-      "name": "/auth",
+      "name": "Auth",
       "description": "Các route phân quyền trên hệ thống"
+    },
+    {
+      "name": "Users",
+      "description": "Các route quản lý tài nguyên người dùng"
+    },
+    {
+      "name": "Electric cabinets",
+      "description": "Các route quản lý tài nguyên tủ điện"
+    },
+    {
+      "name": "Smart devices",
+      "description": "Các route quản lý tài nguyên thiết bị thông minh"
+    },
+    {
+      "name": "Categories",
+      "description": "Các route quản lý tài nguyên danh mục"
     }
   ],
   "paths": {
-    "/login": {
+    "/auth/login": {
       "post": {
         "tags": [
-          "/auth"
+          "Auth"
         ],
-        "summary": "Đăng nhập",
+        "summary": "Đăng nhập dưới tư cách người dùng thường",
         "operationId": "login",
         "requestBody": {
           "description": "Thông tin đăng nhập",
@@ -51,7 +67,36 @@
         },
         "responses": {
           "200": {
-            "description": "Đăng nhập thành công"
+            "description": "Đăng nhập thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Tín hiệu gọi API thành công",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo",
+                      "example": "Login successfully"
+                    },
+                    "accessToken": {
+                      "type": "string",
+                      "description": "Trả về chuỗi token chứa dữ liệu người dùng và xác thực request (vô thời hạn)",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiU3YTNiZGIiLCJuYW1lIjoiVXNlciAwMTEiLCJ0eXBlIjoyLCJpYXQiOjE2NTkzMjQ1NDN9.yw3r6IxwTXFt-XxZVYtqVFmU2D-Poypeq0Qk1XU"
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "description": "Trả về chuỗi token dùng dể tạo access token mới trong trường hợp access token có thời hạn",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiZGIiLCJpYXQiOjE2NTg5OTI3NDF9.NxrO92ZAqY2Vw4kPPCAnJwA"
+                    }
+                  }
+                }
+              }
+            }
           },
           "403": {
             "description": "Đăng nhập không thành công"
@@ -59,19 +104,16 @@
         }
       }
     },
-    "/logout": {
+    "/auth/logout": {
       "delete": {
         "tags": [
-          "/auth"
+          "Auth"
         ],
         "summary": "Đăng xuất",
         "operationId": "log-out",
         "responses": {
           "200": {
             "description": "Đăng xuất thành công"
-          },
-          "403": {
-            "description": "Đăng nhập không thành công"
           }
         },
         "security": [
@@ -81,12 +123,12 @@
         ]
       }
     },
-    "/sign-up": {
+    "/auth/sign-up": {
       "post": {
         "tags": [
-          "/auth"
+          "Auth"
         ],
-        "summary": "Đăng ký",
+        "summary": "Đăng ký người dùng",
         "operationId": "sign-up",
         "requestBody": {
           "description": "Thông tin đăng ký",
@@ -106,8 +148,9 @@
                 }
               },
               "example": {
-                "account": "Demo2",
-                "password": "123345"
+                "account": "demo2",
+                "password": "123456",
+                "username": "Demo2"
               }
             }
           },
@@ -115,7 +158,39 @@
         },
         "responses": {
           "201": {
-            "description": "Đăng ký thành công"
+            "description": "Đăng ký thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Tín hiệu gọi API thành công",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo",
+                      "example": "Login successfully"
+                    },
+                    "User": {
+                      "$ref": "#/components/schemas/User"
+                    },
+                    "accessToken": {
+                      "type": "string",
+                      "description": "Trả về chuỗi token chứa dữ liệu người dùng và xác thực request (vô thời hạn)",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiU3YTNiZGIiLCJuYW1lIjoiVXNlciAwMTEiLCJ0eXBlIjoyLCJpYXQiOjE2NTkzMjQ1NDN9.yw3r6IxwTXFt-XxZVYtqVFmU2D-Poypeq0Qk1XU"
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "description": "Trả về chuỗi token dùng dể tạo access token mới trong trường hợp access token có thời hạn",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiZGIiLCJpYXQiOjE2NTg5OTI3NDF9.NxrO92ZAqY2Vw4kPPCAnJwA"
+                    }
+                  }
+                }
+              }
+            }
           },
           "422": {
             "description": "Tài khoản đã tồn tại"
@@ -168,6 +243,9 @@
             "type": "string",
             "description": "Địa chỉ ip"
           },
+          "area": {
+            "type": "string"
+          },
           "status": {
             "type": "object",
             "description": "Trạng thái của tủ điện",
@@ -177,19 +255,34 @@
                 "description": "Tủ điện có được đang bật hay tắt"
               },
               "cur_wattage": {
-                "type": "integer",
-                "format": "int64",
+                "type": "number",
+                "format": "double",
                 "description": "Công suất hiện tại của tủ điện"
               },
               "cur_amperage": {
-                "type": "integer",
-                "format": "int64",
+                "type": "number",
+                "format": "double",
                 "description": "Cường độ dòng điện hiện tại của tủ điện"
               },
               "cur_voltage": {
-                "type": "integer",
-                "format": "int64",
+                "type": "number",
+                "format": "double",
                 "description": "Điện thế hiện tại của tủ điện"
+              },
+              "cur_frequency": {
+                "type": "number",
+                "format": "double",
+                "description": "Tần số hiện tại của tủ điện"
+              },
+              "cur_consumed_power": {
+                "type": "number",
+                "format": "double",
+                "description": "Công suất tiêu thụ hiện tại của tủ điện"
+              },
+              "cur_power_factor": {
+                "type": "number",
+                "format": "double",
+                "description": "Hệ số công suất hiện tại của tủ điện"
               }
             }
           },
@@ -215,6 +308,10 @@
               "frequency": {
                 "type": "string",
                 "description": "Điện thế của tủ điện"
+              },
+              "resistor": {
+                "type": "string",
+                "description": "Điện trở của tủ điện"
               }
             }
           },
@@ -309,7 +406,9 @@
       "User": {
         "required": [
           "account",
-          "password"
+          "password",
+          "type",
+          "username"
         ],
         "type": "object",
         "description": "Thông tin người dùng",
@@ -324,6 +423,10 @@
             "description": "Tên tài khoản",
             "uniqueItems": true
           },
+          "username": {
+            "type": "string",
+            "description": "Tên người dùng"
+          },
           "password": {
             "type": "string",
             "description": "Mật khẩu"
@@ -333,6 +436,9 @@
           },
           "accessToken": {
             "type": "string"
+          },
+          "type": {
+            "type": "integer"
           }
         },
         "xml": {
