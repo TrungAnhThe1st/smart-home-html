@@ -438,7 +438,8 @@
             "type": "string"
           },
           "type": {
-            "type": "integer"
+            "type": "integer",
+            "description": "0 : Admin 1: Kỹ thuật viên 2: Cư dân"
           }
         },
         "xml": {
