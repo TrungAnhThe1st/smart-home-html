@@ -439,7 +439,7 @@
           },
           "type": {
             "type": "integer",
-            "description": "0: Admin, 1: Kỹ thuật viên, 3: Người dùng"
+            "description": "0: Admin, 1: Kỹ thuật viên, 2: Người dùng"
           }
         },
         "xml": {
