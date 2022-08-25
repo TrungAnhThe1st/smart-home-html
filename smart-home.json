@@ -104,25 +104,6 @@
         }
       }
     },
-    "/auth/logout": {
-      "delete": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Đăng xuất",
-        "operationId": "log-out",
-        "responses": {
-          "200": {
-            "description": "Đăng xuất thành công"
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
     "/auth/sign-up": {
       "post": {
         "tags": [
@@ -431,15 +412,9 @@
             "type": "string",
             "description": "Mật khẩu"
           },
-          "refreshToken": {
-            "type": "string"
-          },
-          "accessToken": {
-            "type": "string"
-          },
           "type": {
             "type": "integer",
-            "description": "0: Admin, 1: Kỹ thuật viên, 2: Người dùng"
+            "description": "0 : Admin 1: Kỹ thuật viên 2: Cư dân"
           }
         },
         "xml": {
