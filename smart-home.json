@@ -87,11 +87,6 @@
                       "type": "string",
                       "description": "Trả về chuỗi token chứa dữ liệu người dùng và xác thực request (vô thời hạn)",
                       "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiU3YTNiZGIiLCJuYW1lIjoiVXNlciAwMTEiLCJ0eXBlIjoyLCJpYXQiOjE2NTkzMjQ1NDN9.yw3r6IxwTXFt-XxZVYtqVFmU2D-Poypeq0Qk1XU"
-                    },
-                    "refreshToken": {
-                      "type": "string",
-                      "description": "Trả về chuỗi token dùng dể tạo access token mới trong trường hợp access token có thời hạn",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiZGIiLCJpYXQiOjE2NTg5OTI3NDF9.NxrO92ZAqY2Vw4kPPCAnJwA"
                     }
                   }
                 }
@@ -162,11 +157,6 @@
                       "type": "string",
                       "description": "Trả về chuỗi token chứa dữ liệu người dùng và xác thực request (vô thời hạn)",
                       "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiU3YTNiZGIiLCJuYW1lIjoiVXNlciAwMTEiLCJ0eXBlIjoyLCJpYXQiOjE2NTkzMjQ1NDN9.yw3r6IxwTXFt-XxZVYtqVFmU2D-Poypeq0Qk1XU"
-                    },
-                    "refreshToken": {
-                      "type": "string",
-                      "description": "Trả về chuỗi token dùng dể tạo access token mới trong trường hợp access token có thời hạn",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiZGIiLCJpYXQiOjE2NTg5OTI3NDF9.NxrO92ZAqY2Vw4kPPCAnJwA"
                     }
                   }
                 }
